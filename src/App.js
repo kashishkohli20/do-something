@@ -8,11 +8,32 @@ import Options from './components/Options';
 class App extends Component {
 
   state = {
-    options: [1,2,3]
+    options: ["A","B","C"],
   }
 
   handleAction = () => {
+    const random = Math.floor(Math.random() * this.state.options.length);
+    const value = this.state.options[random];
+    console.log(value);
+    
+  }
 
+  handleRemoveAll = () => {
+    this.setState({ options: [] });
+  }
+
+  handleRemove = (optionToDelete) => {
+    this.setState((prevState) => ({ options: prevState.options.filter((opt) => (opt !== optionToDelete)) }));
+  }
+
+  handleAddOption = (v) => {
+    if (v === "") {
+      return "Add a valid entry"
+    } else if (this.state.options.includes(v)) {
+      return "This entry already exists"
+    } else {
+      this.setState((prevState) => ({ options: [...prevState.options, v] }));
+    }
   }
 
   render() {
@@ -21,11 +42,16 @@ class App extends Component {
         <Header />
         <Action
           handleAction={this.handleAction}
+          disabled={this.state.options.length === 0 ? true : false}
         />
         <Options
           options={this.state.options}
+          handleRemoveAll={this.handleRemoveAll}
+          handleRemove={this.handleRemove}
         />
-        <AddOption />
+        <AddOption
+          handleAddOption={this.handleAddOption}
+        />
       </div>
     );
   }
