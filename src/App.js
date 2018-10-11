@@ -4,18 +4,24 @@ import Header from './components/Header';
 import Action from './components/Action';
 import AddOption from './components/AddOption';
 import Options from './components/Options';
+import OptionModal from './components/OptionModal';
 
 class App extends Component {
 
   state = {
     options: ["A","B","C"],
+    selectedOption: undefined
   }
 
   handleAction = () => {
     const random = Math.floor(Math.random() * this.state.options.length);
     const value = this.state.options[random];
     console.log(value);
-    
+    this.setState(() => {
+      return {
+        selectedOption: value
+      }
+    });
   }
 
   handleRemoveAll = () => {
@@ -36,6 +42,10 @@ class App extends Component {
     }
   }
 
+  handleSelectedOption = () => {
+    this.setState(() => ({ selectedOption: undefined }));
+  }
+
   render() {
     return (
       <div className="App">
@@ -51,6 +61,10 @@ class App extends Component {
         />
         <AddOption
           handleAddOption={this.handleAddOption}
+        />
+        <OptionModal
+          selectedOption={this.state.selectedOption}
+          handleSelectedOption={this.handleSelectedOption}
         />
       </div>
     );
