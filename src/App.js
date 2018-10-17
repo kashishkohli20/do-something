@@ -9,7 +9,7 @@ import OptionModal from './components/OptionModal';
 class App extends Component {
 
   state = {
-    options: ["A","B","C"],
+    options: [],
     selectedOption: undefined
   }
 
@@ -44,6 +44,23 @@ class App extends Component {
 
   handleSelectedOption = () => {
     this.setState(() => ({ selectedOption: undefined }));
+  }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+      this.setState(() => ({ options }));
+    } catch(e) {
+
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem('options', json);
+    }
   }
 
   render() {
