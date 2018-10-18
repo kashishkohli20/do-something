@@ -2,9 +2,12 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <div>
-      <h1>Decision Maker</h1>
-      <p>Let us decide what's best for you to do right now.</p>
+    <div className="header">
+      <div className="container">
+        <h1 className="header__title">Decision Maker</h1>
+        <p className="header__subtitle">Let us decide what's best for you to do right now.</p>
+      </div>
+
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+
 import Header from './components/Header';
 import Action from './components/Action';
 import AddOption from './components/AddOption';
@@ -51,13 +51,13 @@ class App extends Component {
       const json = localStorage.getItem('options');
       const options = JSON.parse(json);
       this.setState(() => ({ options }));
-    } catch(e) {
+    } catch (e) {
 
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.options.length !== this.state.options.length) {
+    if (prevState.options.length !== this.state.options.length) {
       const json = JSON.stringify(this.state.options);
       localStorage.setItem('options', json);
     }
@@ -65,20 +65,24 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <Header />
-        <Action
-          handleAction={this.handleAction}
-          disabled={this.state.options.length === 0 ? true : false}
-        />
-        <Options
-          options={this.state.options}
-          handleRemoveAll={this.handleRemoveAll}
-          handleRemove={this.handleRemove}
-        />
-        <AddOption
-          handleAddOption={this.handleAddOption}
-        />
+        <div className="container">
+          <Action
+            handleAction={this.handleAction}
+            disabled={this.state.options.length === 0 ? true : false}
+          />
+          <div className="widget">
+            <Options
+              options={this.state.options}
+              handleRemoveAll={this.handleRemoveAll}
+              handleRemove={this.handleRemove}
+            />
+            <AddOption
+              handleAddOption={this.handleAddOption}
+            />
+          </div>
+        </div>
         <OptionModal
           selectedOption={this.state.selectedOption}
           handleSelectedOption={this.handleSelectedOption}
